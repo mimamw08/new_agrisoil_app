@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>723788646343-6r82vriok8tnaf06ti9baao6caovtuh5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.723788646343-6r82vriok8tnaf06ti9baao6caovtuh5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>723788646343-5c7camp8d93odm77l0cl8rcfdrm55bk2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD7QJM3OhTOxX5cbPlFXn17St04BEkB16g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>723788646343</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.newAgrisoilApp</string>
+	<key>PROJECT_ID</key>
+	<string>bottlecash-4577a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bottlecash-4577a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:723788646343:ios:6f27c30209289e466fbbe2</string>
+	<key>DATABASE_URL</key>
+	<string>https://bottlecash-4577a-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

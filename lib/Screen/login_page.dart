@@ -1,10 +1,15 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:new_agrisoil_app/Navbar/navbar.dart';
+import 'package:new_agrisoil_app/Screen/loginnohp.dart';
 import 'package:new_agrisoil_app/Screen/register_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class login_page extends StatefulWidget {
   login_page({Key? key}) : super(key: key);
@@ -27,11 +32,12 @@ class _login_pageState extends State<login_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Align(
         alignment: Alignment.center,
         child: Container(
-          decoration: BoxDecoration(color: Colors.white),
+          // decoration: BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               SizedBox(
@@ -98,7 +104,7 @@ class _login_pageState extends State<login_page> {
                                         borderRadius: BorderRadius.circular(5)),
                                     prefixIcon: Icon(Icons.email_outlined),
                                     fillColor: Colors.white,
-                                    filled: true,
+                                    //filled: true,
                                     labelText: 'Email',
                                     hintText: 'Email'),
                                 keyboardType: TextInputType.emailAddress,
@@ -140,7 +146,7 @@ class _login_pageState extends State<login_page> {
                                     ),
                                     prefixIcon: Icon(Icons.lock),
                                     fillColor: Colors.white,
-                                    filled: true,
+                                    //filled: true,
                                     labelText: 'Password',
                                     hintText: 'Password'),
                                 validator: (PassCurrentValue) {
@@ -166,13 +172,7 @@ class _login_pageState extends State<login_page> {
                                 width: 296,
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Persistent_navbar()));
-                                    }
+                                    _submit();
                                   },
                                   child: const Text('Masuk'),
                                   style: ElevatedButton.styleFrom(
@@ -187,7 +187,13 @@ class _login_pageState extends State<login_page> {
                                 height: 20,
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              loginnomorhp()));
+                                },
                                 child: Container(
                                   height: 45,
                                   width: 296,
@@ -279,5 +285,53 @@ class _login_pageState extends State<login_page> {
         ),
       )),
     );
+  }
+
+  void _submit() async {
+    final DatabaseReference database = FirebaseDatabase.instance.ref();
+    final ProgressDialog pr = ProgressDialog(context);
+
+    pr.style(
+      progress: 50.0,
+      message: "Please wait...",
+      progressWidget: Container(
+          padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
+    if (_formKey.currentState!.validate()) {
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: _emailController.text.trim(),
+                password: _passController.text.trim());
+
+        if (credential.user!.emailVerified) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Persistent_navbar()));
+        } else {
+          Fluttertoast.showToast(msg: 'Perlu Verifikasi email terlebih dahulu');
+        }
+        final uid = credential.user?.uid;
+        final userData = await database.child('user/datauser/$uid').get();
+        //final profil = jsonDecode(userData);
+        DatabaseEvent event =
+            await FirebaseDatabase.instance.ref('user/datauser/$uid').once();
+
+        //print(userData.value);
+        Fluttertoast.showToast(msg: "Berhasil Login");
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Persistent_navbar()));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          Fluttertoast.showToast(msg: 'Email belum terdaftar');
+        } else if (e.code == 'wrong-password') {
+          Fluttertoast.showToast(msg: 'Password salah');
+        }
+      }
+    }
   }
 }

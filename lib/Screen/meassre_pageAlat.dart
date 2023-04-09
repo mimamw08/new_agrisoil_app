@@ -1,76 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_agrisoil_app/Screen/meassure_page.dart';
 
-class history_page extends StatefulWidget {
-  history_page({Key? key}) : super(key: key);
+class alatsaya extends StatefulWidget {
+  alatsaya({Key? key}) : super(key: key);
 
   @override
-  State<history_page> createState() => _history_pageState();
+  State<alatsaya> createState() => _alatsayaState();
 }
 
-class _history_pageState extends State<history_page> {
+class _alatsayaState extends State<alatsaya> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          child: Align(
-        alignment: Alignment.center,
         child: Column(
           children: [
             SizedBox(
-              height: 80,
+              height: 100,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                    width: 140,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => meassure_page()));
+                      },
+                      icon: Icon(CupertinoIcons.add),
+                      label: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Text('Tambah alat')],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey),
+                    )),
+                SizedBox(
+                    width: 140,
+                    child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(CupertinoIcons.folder),
+                      label: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [Text('Alat Saya')],
+                      ),
+                    ))
+              ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             Container(
-              height: 130,
-              width: 340,
+              height: 120,
+              width: 300,
               decoration: BoxDecoration(
-                  //: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.green),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 90,
-                    width: 200,
-                    // decoration:
-                    //     BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Riwayat',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Kamu punya %jmlhAlat% alat',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w600),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 90,
-                    width: 100,
-                    // decoration:
-                    //     BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: Image.asset('Asset/gambardaun.png'),
-                  ),
-                ],
+                  //border: Border.all(color: Colors.black),
+                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 3)],
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [Image.asset('Asset/Maps.png')],
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Container(
               height: 300,
@@ -323,7 +320,7 @@ class _history_pageState extends State<history_page> {
             )
           ],
         ),
-      )),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_agrisoil_app/Screen/calculator.dart';
 import 'package:new_agrisoil_app/Screen/history_page.dart';
 import 'package:new_agrisoil_app/Screen/home_page.dart';
 import 'package:new_agrisoil_app/Screen/meassure_page.dart';
@@ -20,6 +21,7 @@ class Persistent_navbar extends StatelessWidget {
         home_page(),
         meassure_page(),
         history_page(),
+        calculator(),
         predict_page(),
       ];
     }
@@ -42,6 +44,11 @@ class Persistent_navbar extends StatelessWidget {
             icon: Icon(Icons.history_rounded),
             title: ("Riwayat"),
             activeColorPrimary: Colors.brown, //coklat
+            inactiveColorPrimary: CupertinoColors.systemGrey),
+        PersistentBottomNavBarItem(
+            icon: Icon(Icons.calculate),
+            title: ("Kalkulator"),
+            activeColorPrimary: Colors.orangeAccent, //coklat
             inactiveColorPrimary: CupertinoColors.systemGrey),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.antenna_radiowaves_left_right),
