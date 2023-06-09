@@ -5,7 +5,7 @@ import 'package:new_agrisoil_app/Screen/login_page.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-class authService {
+class AuthService {
   handleAuthState() {
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

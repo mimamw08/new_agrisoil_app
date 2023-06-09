@@ -315,13 +315,6 @@ class _login_pageState extends State<login_page> {
         } else {
           Fluttertoast.showToast(msg: 'Perlu Verifikasi email terlebih dahulu');
         }
-        final uid = credential.user?.uid;
-        final userData = await database.child('user/datauser/$uid').get();
-        //final profil = jsonDecode(userData);
-        DatabaseEvent event =
-            await FirebaseDatabase.instance.ref('user/datauser/$uid').once();
-
-        //print(userData.value);
         Fluttertoast.showToast(msg: "Berhasil Login");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => Persistent_navbar()));

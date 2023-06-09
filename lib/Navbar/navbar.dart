@@ -5,6 +5,7 @@ import 'package:new_agrisoil_app/Screen/calculator.dart';
 import 'package:new_agrisoil_app/Screen/history_page.dart';
 import 'package:new_agrisoil_app/Screen/home_page.dart';
 import 'package:new_agrisoil_app/Screen/meassure_page.dart';
+import 'package:new_agrisoil_app/Screen/meassurepage.dart';
 import 'package:new_agrisoil_app/Screen/predict_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -19,7 +20,7 @@ class Persistent_navbar extends StatelessWidget {
     List<Widget> _buildScreens() {
       return [
         home_page(),
-        meassure_page(),
+        meassurePage(),
         history_page(),
         calculator(),
         predict_page(),

@@ -9,6 +9,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:new_agrisoil_app/service_auth/auth_service.dart';
 import 'package:new_agrisoil_app/encode&decode/keamanan.dart';
 import 'login_page.dart';
+import 'package:cryptography/cryptography.dart';
 
 class register_page extends StatefulWidget {
   register_page({Key? key}) : super(key: key);
@@ -32,10 +33,6 @@ class _register_pageState extends State<register_page> {
   String spasi = " ";
   String final_key = '';
 
-  var encryptnama;
-  var encryptemail;
-  var encryptpassword;
-  var encryptnohp;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -343,13 +340,23 @@ class _register_pageState extends State<register_page> {
         Fluttertoast.showToast(
             msg: 'Email verifikasi sudah dikirim segera cek email');
         String uid = userCredential.user!.uid;
-        //encryptemail = encryptString(_nameController.toString(), key);
+//fungsi enkripsi
+        final key = 'ini kunci rahasia';
+        final enkripnama = encryptAES(_nameController.text, key);
+        final enkripemail = encryptAES(_emailController.text, key);
+        final enkrippass = encryptAES(_passController.text, key);
+        final enkripnomor = encryptAES(_phoneController.text, key);
+        print('cipher text = $enkripnama');
+        print('cipher text = $enkripemail');
+        print('cipher text = $enkrippass');
+        print('cipher text = $enkripnomor');
+        //input data ke database
         if (userCredential.user != null) {
           Map<String, dynamic> pelanggan = {
-            'nama': _nameController.text.toString(),
-            'email': _emailController.text.toString(),
-            'password': _passController.text.toString(),
-            'nohp': _phoneController.text.toString(),
+            'nama': enkripnama,
+            'email': enkripemail,
+            'password': enkrippass,
+            'nohp': enkripnomor,
             'uid': uid,
           };
           dbref.child('/$uid').set(pelanggan);

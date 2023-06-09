@@ -30,6 +30,7 @@ class _meassure_pageState extends State<meassure_page> {
 
   String cekUid = FirebaseAuth.instance.currentUser!.uid;
   DatabaseReference profil = FirebaseDatabase.instance.ref();
+
   @override
   Widget build(BuildContext context) {
     final add = database.child('$cekUid/');
@@ -214,17 +215,7 @@ class _meassure_pageState extends State<meassure_page> {
                                               child: SizedBox(
                                                 width: 300,
                                                 child: ElevatedButton(
-                                                    onPressed: () async {
-                                                      var enkripsi;
-                                                      enkripsi =
-                                                          npkp201EUI.text;
-                                                      EncryptData.encryptAES(
-                                                          enkripsi);
-                                                      await add.set({
-                                                        'enkripsi': enkripsi
-                                                      });
-                                                      Navigator.pop(context);
-                                                    },
+                                                    onPressed: () async {},
                                                     child: Text('Submit')),
                                               ),
                                             )

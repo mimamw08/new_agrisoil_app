@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_agrisoil_app/Screen/alat1.dart';
+import 'package:new_agrisoil_app/Screen/alat2.dart';
+import 'package:new_agrisoil_app/Screen/alat6.dart';
+import 'package:new_agrisoil_app/Screen/alat9.dart';
 
 class history_page extends StatefulWidget {
   history_page({Key? key}) : super(key: key);
@@ -93,74 +97,94 @@ class _history_pageState extends State<history_page> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => alat_1()));
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Icon(
+                              Icons.extension_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Alat 1',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ]),
+                        ),
                       ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => alat6()));
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Icon(
+                              Icons.extension_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Alat 6',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ]),
+                        ),
                       ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => alat9()));
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Icon(
+                              Icons.extension_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Alat 9',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ]),
+                        ),
                       )
                     ],
                   ),
@@ -170,154 +194,160 @@ class _history_pageState extends State<history_page> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
-                      ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
-                      ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => alat2()));
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Icon(
+                              Icons.extension_rounded,
+                              color: Colors.white,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Alat 2',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ]),
+                        ),
                       )
+                      // Container(
+                      //   height: 60,
+                      //   width: 80,
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.green,
+                      //       borderRadius: BorderRadius.circular(10)),
+                      //   child: Column(children: [
+                      //     SizedBox(
+                      //       height: 8,
+                      //     ),
+                      //     Icon(
+                      //       Icons.extension_rounded,
+                      //       color: Colors.white,
+                      //     ),
+                      //     SizedBox(
+                      //       height: 5,
+                      //     ),
+                      //     Text(
+                      //       'data',
+                      //       style: TextStyle(color: Colors.white),
+                      //     )
+                      //   ]),
+                      // ),
+                      // Container(
+                      //   height: 60,
+                      //   width: 80,
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.green,
+                      //       borderRadius: BorderRadius.circular(10)),
+                      //   child: Column(children: [
+                      //     SizedBox(
+                      //       height: 8,
+                      //     ),
+                      //     Icon(
+                      //       Icons.extension_rounded,
+                      //       color: Colors.white,
+                      //     ),
+                      //     SizedBox(
+                      //       height: 5,
+                      //     ),
+                      //     Text(
+                      //       'data',
+                      //       style: TextStyle(color: Colors.white),
+                      //     )
+                      //   ]),
+                      // )
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
-                      ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
-                      ),
-                      Container(
-                        height: 60,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Icon(
-                            Icons.extension_rounded,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'data',
-                            style: TextStyle(color: Colors.white),
-                          )
-                        ]),
-                      )
-                    ],
-                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Container(
+                  //       height: 60,
+                  //       width: 80,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.green,
+                  //           borderRadius: BorderRadius.circular(10)),
+                  //       child: Column(children: [
+                  //         SizedBox(
+                  //           height: 8,
+                  //         ),
+                  //         Icon(
+                  //           Icons.extension_rounded,
+                  //           color: Colors.white,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         Text(
+                  //           'data',
+                  //           style: TextStyle(color: Colors.white),
+                  //         )
+                  //       ]),
+                  //     ),
+                  //     Container(
+                  //       height: 60,
+                  //       width: 80,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.green,
+                  //           borderRadius: BorderRadius.circular(10)),
+                  //       child: Column(children: [
+                  //         SizedBox(
+                  //           height: 8,
+                  //         ),
+                  //         Icon(
+                  //           Icons.extension_rounded,
+                  //           color: Colors.white,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         Text(
+                  //           'data',
+                  //           style: TextStyle(color: Colors.white),
+                  //         )
+                  //       ]),
+                  //     ),
+                  //     Container(
+                  //       height: 60,
+                  //       width: 80,
+                  //       decoration: BoxDecoration(
+                  //           color: Colors.green,
+                  //           borderRadius: BorderRadius.circular(10)),
+                  //       child: Column(children: [
+                  //         SizedBox(
+                  //           height: 8,
+                  //         ),
+                  //         Icon(
+                  //           Icons.extension_rounded,
+                  //           color: Colors.white,
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         Text(
+                  //           'data',
+                  //           style: TextStyle(color: Colors.white),
+                  //         )
+                  //       ]),
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
             )

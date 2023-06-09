@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:new_agrisoil_app/Screen/login_page.dart';
+import 'package:new_agrisoil_app/encode&decode/keamanan.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -26,11 +27,17 @@ class _home_pageState extends State<home_page> {
   String cekUid = FirebaseAuth.instance.currentUser!.uid;
   DatabaseReference profil = FirebaseDatabase.instance.ref();
   DateTime date = DateTime.now();
+  final DatabaseReference _database = FirebaseDatabase.instance.reference();
   //String formattgl = DateFormat.yMMMEd().format(date);
   var wktuskrng;
   var nama;
   var emailuser;
   var nohpuser;
+
+  var hsldekripnama;
+  var hsldekriemailuser;
+  var hsldekrinohpuser;
+
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
@@ -96,21 +103,21 @@ class _home_pageState extends State<home_page> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                '$nama',
+                                '$hsldekripnama',
                                 style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '$emailuser',
+                                '$hsldekriemailuser',
                                 style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '$nohpuser',
+                                '$hsldekrinohpuser',
                                 style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -374,6 +381,13 @@ class _home_pageState extends State<home_page> {
           nama = profiluser['nama'];
           emailuser = profiluser['email'];
           nohpuser = profiluser['nohp'];
+          final key = 'ini kunci rahasia';
+          final dekripnama = decryptAES(nama, key);
+          final dekripemail = decryptAES(emailuser, key);
+          final dekripnomor = decryptAES(nohpuser, key);
+          hsldekripnama = dekripnama;
+          hsldekriemailuser = dekripemail;
+          hsldekrinohpuser = dekripnomor;
         });
       });
     });

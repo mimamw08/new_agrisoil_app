@@ -2,6 +2,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:new_agrisoil_app/Screen/home_page.dart';
 import 'package:new_agrisoil_app/Screen/welcome_page.dart';
 import 'package:flutter/material.dart';
+import 'package:new_agrisoil_app/service_auth/auth_service.dart';
 
 class splash_screen extends StatefulWidget {
   splash_screen({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _splash_screenState extends State<splash_screen> {
   void initState() {
     Future.delayed(Duration(seconds: splashtime), () async {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return welcome_page();
+        return AuthService().handleAuthState();
       }));
     });
     super.initState();
