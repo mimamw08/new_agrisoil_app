@@ -16,13 +16,17 @@ class _history_pageState extends State<history_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.green,
+      ),
       body: Container(
           child: Align(
         alignment: Alignment.center,
         child: Column(
           children: [
             SizedBox(
-              height: 80,
+              height: 40,
             ),
             Container(
               height: 130,
@@ -56,7 +60,7 @@ class _history_pageState extends State<history_page> {
                           height: 20,
                         ),
                         Text(
-                          'Kamu punya %jmlhAlat% alat',
+                          'Kamu punya 4 alat',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w600),
                         )
@@ -99,10 +103,8 @@ class _history_pageState extends State<history_page> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => alat_1()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => alat2()));
                         },
                         child: Container(
                           height: 60,
@@ -122,12 +124,43 @@ class _history_pageState extends State<history_page> {
                               height: 5,
                             ),
                             Text(
-                              'Alat 1',
+                              'Alat 2',
                               style: TextStyle(color: Colors.white),
                             )
                           ]),
                         ),
                       ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => alat_1()));
+                      //   },
+                      //   child: Container(
+                      //     height: 60,
+                      //     width: 80,
+                      //     decoration: BoxDecoration(
+                      //         color: Colors.green,
+                      //         borderRadius: BorderRadius.circular(10)),
+                      //     child: Column(children: [
+                      //       SizedBox(
+                      //         height: 8,
+                      //       ),
+                      //       Icon(
+                      //         Icons.extension_rounded,
+                      //         color: Colors.white,
+                      //       ),
+                      //       SizedBox(
+                      //         height: 5,
+                      //       ),
+                      //       Text(
+                      //         'Alat 1',
+                      //         style: TextStyle(color: Colors.white),
+                      //       )
+                      //     ]),
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context,
@@ -151,7 +184,7 @@ class _history_pageState extends State<history_page> {
                               height: 5,
                             ),
                             Text(
-                              'Alat 6',
+                              'Alat 3',
                               style: TextStyle(color: Colors.white),
                             )
                           ]),
@@ -180,7 +213,7 @@ class _history_pageState extends State<history_page> {
                               height: 5,
                             ),
                             Text(
-                              'Alat 9',
+                              'Alat 5',
                               style: TextStyle(color: Colors.white),
                             )
                           ]),
@@ -194,35 +227,6 @@ class _history_pageState extends State<history_page> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => alat2()));
-                        },
-                        child: Container(
-                          height: 60,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Column(children: [
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Icon(
-                              Icons.extension_rounded,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Alat 2',
-                              style: TextStyle(color: Colors.white),
-                            )
-                          ]),
-                        ),
-                      )
                       // Container(
                       //   height: 60,
                       //   width: 80,

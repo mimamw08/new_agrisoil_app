@@ -7,6 +7,7 @@ import 'package:new_agrisoil_app/Screen/home_page.dart';
 import 'package:new_agrisoil_app/Screen/meassure_page.dart';
 import 'package:new_agrisoil_app/Screen/meassurepage.dart';
 import 'package:new_agrisoil_app/Screen/predict_page.dart';
+import 'package:new_agrisoil_app/Screen/profilPage.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Persistent_navbar extends StatelessWidget {
@@ -21,9 +22,10 @@ class Persistent_navbar extends StatelessWidget {
       return [
         home_page(),
         meassurePage(),
-        history_page(),
-        calculator(),
+        //history_page(),
+        //calculator(),
         predict_page(),
+        profil_page()
       ];
     }
 
@@ -38,23 +40,29 @@ class Persistent_navbar extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.graph_circle),
           title: ("Pengukuran"),
-          activeColorPrimary: Colors.red, //merah terang
+          activeColorPrimary: CupertinoColors.activeGreen, //merah terang
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
-        PersistentBottomNavBarItem(
-            icon: Icon(Icons.history_rounded),
-            title: ("Riwayat"),
-            activeColorPrimary: Colors.brown, //coklat
-            inactiveColorPrimary: CupertinoColors.systemGrey),
-        PersistentBottomNavBarItem(
-            icon: Icon(Icons.calculate),
-            title: ("Kalkulator"),
-            activeColorPrimary: Colors.orangeAccent, //coklat
-            inactiveColorPrimary: CupertinoColors.systemGrey),
+        // PersistentBottomNavBarItem(
+        //     icon: Icon(Icons.history_rounded),
+        //     title: ("Riwayat"),
+        //     activeColorPrimary: Colors.brown, //coklat
+        //     inactiveColorPrimary: CupertinoColors.systemGrey),
+        // PersistentBottomNavBarItem(
+        //     icon: Icon(Icons.calculate),
+        //     title: ("Kalkulator"),
+        //     activeColorPrimary: Colors.orangeAccent, //coklat
+        //     inactiveColorPrimary: CupertinoColors.systemGrey),
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.antenna_radiowaves_left_right),
           title: ("Prediksi"),
-          activeColorPrimary: CupertinoColors.activeBlue, //biru
+          activeColorPrimary: CupertinoColors.activeGreen, //biru
+          inactiveColorPrimary: CupertinoColors.systemGrey,
+        ),
+        PersistentBottomNavBarItem(
+          icon: Icon(CupertinoIcons.profile_circled),
+          title: ("Profil"),
+          activeColorPrimary: CupertinoColors.activeGreen, //biru
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
       ];
@@ -92,7 +100,7 @@ class Persistent_navbar extends StatelessWidget {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-          NavBarStyle.style6, // Choose the nav bar style with this property.
+          NavBarStyle.style9, // Choose the nav bar style with this property.
     );
   }
 }

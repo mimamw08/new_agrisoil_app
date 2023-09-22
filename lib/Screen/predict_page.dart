@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -15,10 +19,60 @@ class _predict_pageState extends State<predict_page> {
   @override
   String dropdownValue = 'N';
   late TooltipBehavior _tooltipBehavior;
+  DateTime date = DateTime.now();
+  final DatabaseReference _database = FirebaseDatabase.instance.reference();
+  final DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference();
+  List<DataPoint> dataPoints = [];
+
+  var numberdataN_alat2;
+  var numberdataP_alat2;
+  var numberdataK_alat2;
+
+  var numberdataN_alat3;
+  var numberdataP_alat3;
+  var numberdataK_alat3;
+
+  var word;
 
   @override
   void initState() {
     _tooltipBehavior = TooltipBehavior(enable: true);
+    profilkepuk();
+    profilkepukN_alat2();
+    profilkepukP_alat2();
+    profilkepukK_alat2();
+    profilkepukN_alat3();
+    profilkepukP_alat3();
+    profilkepukK_alat3();
+    databaseReference
+        .child('Alat_Ukur3')
+        .limitToLast(10)
+        .onValue
+        .listen((event) {
+      // Mendapatkan data dari DataSnapshot
+      DataSnapshot snapshot = event.snapshot;
+      Map<dynamic, dynamic> values = snapshot.value as Map<dynamic, dynamic>;
+
+      // Menghapus data sebelumnya
+      dataPoints.clear();
+
+      // Parsing data ke objek DataPoint
+      values.forEach((key, value) {
+        num? yValue = num.tryParse(value['n'].toString());
+        if (yValue != null) {
+          dataPoints.add(DataPoint(key, yValue));
+        }
+        num? xValue = num.tryParse(value['waktu']);
+        if (xValue != null) {
+          dataPoints.add(DataPoint(key, xValue));
+        }
+      });
+
+      // Memperbarui tampilan setelah mendapatkan data
+      setState(() {});
+    });
+    super.initState();
     super.initState();
   }
 
@@ -35,7 +89,9 @@ class _predict_pageState extends State<predict_page> {
               height: 350,
               width: 350,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: [BoxShadow(blurRadius: 2)],
+                color: Colors.white,
               ),
               child: TableCalendar(
                 firstDay: DateTime.utc(2010, 10, 16),
@@ -45,6 +101,155 @@ class _predict_pageState extends State<predict_page> {
             ),
             SizedBox(
               height: 20,
+            ),
+            //kotak prediksi
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                  height: 120,
+                  width: 360,
+                  decoration: BoxDecoration(
+                      //border: Border.all(color: Colors.black),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [BoxShadow(blurRadius: 2)]),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Prediksi Alat 2',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        '$date',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Container(
+                        height: 60,
+                        child: Container(
+                          height: 50,
+                          width: 350,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Rekomendasi pupuk KCL sejumlah: $numberdataN_alat2 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Rekomendasi pupuk SP36 sejumlah: $numberdataP_alat2 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Rekomendasi pupuk Urea sejumlah: $numberdataK_alat2 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              // Text(
+                              //   'Dibutuhkan untuk dipupuk esok hari',
+                              //   style: TextStyle(
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: 16),
+                              // )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                  height: 120,
+                  width: 360,
+                  decoration: BoxDecoration(
+                      //border: Border.all(color: Colors.black),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [BoxShadow(blurRadius: 2)]),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Prediksi Alat 3',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Text(
+                        '$date',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 3,
+                      ),
+                      Container(
+                        height: 60,
+                        child: Container(
+                          height: 50,
+                          width: 350,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Rekomendasi pupuk KCL sejumlah: $numberdataN_alat3 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Rekomendasi pupuk SP36 sejumlah: $numberdataP_alat3 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              Text(
+                                'Rekomendasi pupuk Urea sejumlah: $numberdataK_alat3 gram',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              // Text(
+                              //   'Dibutuhkan untuk dipupuk esok hari',
+                              //   style: TextStyle(
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: 16),
+                              // )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Container(
               height: 430,
@@ -70,8 +275,8 @@ class _predict_pageState extends State<predict_page> {
                   Container(
                     height: 70,
                     width: 350,
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
+                    // decoration:
+                    //     BoxDecoration(border: Border.all(color: Colors.black)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -96,7 +301,11 @@ class _predict_pageState extends State<predict_page> {
                             });
                           },
                         ),
-                        Text('nama tanaman/tanah')
+                        Text(
+                          'Unsur Tanah',
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        )
                       ],
                     ),
                   ),
@@ -104,43 +313,22 @@ class _predict_pageState extends State<predict_page> {
                     height: 20,
                   ),
                   Container(
-                      height: 300,
-                      width: 380,
-                      decoration: BoxDecoration(
-                          //border: Border.all(color: Colors.black)
-                          ),
-                      child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
-                          // Chart title
-                          title: ChartTitle(text: 'Grafik Tanah'),
-                          // Enable legend
-                          //legend: Legend(isVisible: true),
-                          // Enable tooltip
-                          tooltipBehavior: _tooltipBehavior,
-                          series: <LineSeries<SalesData, String>>[
-                            LineSeries<SalesData, String>(
-                                dataSource: <SalesData>[
-                                  SalesData('Jan', 35),
-                                  SalesData('Feb', 28),
-                                  SalesData('Mar', 34),
-                                  SalesData('Apr', 32),
-                                  SalesData('May', 40),
-                                  SalesData('Jun', 10),
-                                  SalesData('Jul', 12),
-                                  SalesData('Aug', 20),
-                                  SalesData('Sep', 25),
-                                  SalesData('Oct', 21),
-                                  SalesData('Nov', 33),
-                                  SalesData('Des', 38)
-                                ],
-                                xValueMapper: (SalesData sales, _) =>
-                                    sales.year,
-                                yValueMapper: (SalesData sales, _) =>
-                                    sales.sales,
-                                // Enable data label
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true))
-                          ]))
+                    height: 300,
+                    width: 380,
+                    decoration: BoxDecoration(
+                        //border: Border.all(color: Colors.black)
+                        ),
+                    child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      series: <LineSeries<DataPoint, dynamic>>[
+                        LineSeries<DataPoint, dynamic>(
+                          dataSource: dataPoints,
+                          xValueMapper: (DataPoint data, _) => data.x,
+                          yValueMapper: (DataPoint data, _) => data.y!,
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             )
@@ -149,10 +337,108 @@ class _predict_pageState extends State<predict_page> {
       ),
     );
   }
+
+  void profilkepuk() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('prediksi1(alat2)/kurang gram').get();
+    if (snapshot.exists) {
+      word = snapshot.value.toString();
+      print(word);
+      setState(() {});
+    } else {
+      word = 'Tanaman Membutuhkan Pupuk';
+      print('No data available.');
+    }
+  }
+
+  void profilkepukN_alat2() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi1(alat2)/Penambahan pupuk KCL')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataN_alat2 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
+
+  void profilkepukP_alat2() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi1(alat2)/Penambahan pupuk SP36')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataP_alat2 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
+
+  void profilkepukK_alat2() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi1(alat2)/Penambahan pupuk Urea')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataK_alat2 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
+
+  void profilkepukN_alat3() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi2(alat3)/Penambahan pupuk KCL')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataN_alat3 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
+
+  void profilkepukP_alat3() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi2(alat3)/Penambahan pupuk SP36')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataP_alat3 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
+
+  void profilkepukK_alat3() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref
+        .child('prediksi2(alat3)/Penambahan pupuk Urea')
+        .onValue
+        .listen((event) {
+      final DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        numberdataK_alat3 = snapshot.value.toString();
+        setState(() {});
+      }
+    });
+  }
 }
 
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
+class DataPoint {
+  final dynamic x;
+  final dynamic y;
+
+  DataPoint(this.x, this.y);
 }

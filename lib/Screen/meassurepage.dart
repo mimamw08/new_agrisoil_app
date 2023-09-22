@@ -557,7 +557,7 @@ class _meassurePageState extends State<meassurePage>
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => alat_1()));
+                                      builder: (context) => alat2()));
                             },
                             child: Container(
                               height: 60,
@@ -577,12 +577,43 @@ class _meassurePageState extends State<meassurePage>
                                   height: 5,
                                 ),
                                 Text(
-                                  'Alat 1',
+                                  'Alat 2',
                                   style: TextStyle(color: Colors.white),
                                 )
                               ]),
                             ),
                           ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) => alat_1()));
+                          //   },
+                          //   child: Container(
+                          //     height: 60,
+                          //     width: 80,
+                          //     decoration: BoxDecoration(
+                          //         color: Colors.green,
+                          //         borderRadius: BorderRadius.circular(10)),
+                          //     child: Column(children: [
+                          //       SizedBox(
+                          //         height: 8,
+                          //       ),
+                          //       Icon(
+                          //         Icons.extension_rounded,
+                          //         color: Colors.white,
+                          //       ),
+                          //       SizedBox(
+                          //         height: 5,
+                          //       ),
+                          //       Text(
+                          //         'Alat 1',
+                          //         style: TextStyle(color: Colors.white),
+                          //       )
+                          //     ]),
+                          //   ),
+                          // ),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -608,7 +639,7 @@ class _meassurePageState extends State<meassurePage>
                                   height: 5,
                                 ),
                                 Text(
-                                  'Alat 6',
+                                  'Alat 3',
                                   style: TextStyle(color: Colors.white),
                                 )
                               ]),
@@ -653,37 +684,6 @@ class _meassurePageState extends State<meassurePage>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => alat2()));
-                            },
-                            child: Container(
-                              height: 60,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(children: [
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Icon(
-                                  Icons.extension_rounded,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'Alat 2',
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              ]),
-                            ),
-                          )
                           // Container(
                           //   height: 60,
                           //   width: 80,

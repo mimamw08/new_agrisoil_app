@@ -9,7 +9,7 @@ import 'package:new_agrisoil_app/Navbar/navbar.dart';
 import 'package:new_agrisoil_app/Screen/loginnohp.dart';
 import 'package:new_agrisoil_app/Screen/register_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class login_page extends StatefulWidget {
   login_page({Key? key}) : super(key: key);
@@ -289,19 +289,8 @@ class _login_pageState extends State<login_page> {
 
   void _submit() async {
     final DatabaseReference database = FirebaseDatabase.instance.ref();
-    final ProgressDialog pr = ProgressDialog(context);
-
-    pr.style(
-      progress: 50.0,
-      message: "Please wait...",
-      progressWidget: Container(
-          padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
-      maxProgress: 100.0,
-      progressTextStyle: TextStyle(
-          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-      messageTextStyle: TextStyle(
-          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
-    );
+    final ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(msg: 'Harap tunggu', max: 100, progressType: ProgressType.valuable);
     if (_formKey.currentState!.validate()) {
       try {
         final credential = await FirebaseAuth.instance

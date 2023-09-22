@@ -40,7 +40,7 @@ class _alat2State extends State<alat2> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'N: ' + alat_2['N'],
+                      'N: ' + alat_2['n'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -48,7 +48,7 @@ class _alat2State extends State<alat2> {
                       height: 2,
                     ),
                     Text(
-                      'P: ' + alat_2['P'],
+                      'P: ' + alat_2['p'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -56,7 +56,7 @@ class _alat2State extends State<alat2> {
                       height: 2,
                     ),
                     Text(
-                      'K:  ' + alat_2['K'],
+                      'K:  ' + alat_2['k'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -64,12 +64,17 @@ class _alat2State extends State<alat2> {
                       height: 2,
                     ),
                     Text(
-                      'Moist: ' + alat_2['Moist'],
+                      'Moist: ' + alat_2['moisture'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      'Waktu: ' + alat_2['Waktu'],
+                      'pH: ' + alat_2['ph'],
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      'Waktu: ' + alat_2['waktu'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),

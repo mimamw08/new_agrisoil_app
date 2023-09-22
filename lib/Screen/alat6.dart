@@ -11,7 +11,7 @@ class alat6 extends StatefulWidget {
 
 class _alat6State extends State<alat6> {
   @override
-  Query dbref = FirebaseDatabase.instance.ref().child('Alat_Ukur6/');
+  //Query dbref = FirebaseDatabase.instance.ref().child('Alat_Ukur6/');
   @override
   Widget alat6({required Map alat_6}) {
     return Container(
@@ -42,7 +42,7 @@ class _alat6State extends State<alat6> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'N: ' + alat_6['N'],
+                      'N: ' + alat_6['n'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -50,7 +50,7 @@ class _alat6State extends State<alat6> {
                       height: 2,
                     ),
                     Text(
-                      'P: ' + alat_6['P'],
+                      'P: ' + alat_6['p'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -58,7 +58,7 @@ class _alat6State extends State<alat6> {
                       height: 2,
                     ),
                     Text(
-                      'K:  ' + alat_6['K'],
+                      'K:  ' + alat_6['k'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -66,17 +66,17 @@ class _alat6State extends State<alat6> {
                       height: 2,
                     ),
                     Text(
-                      'Moist: ' + alat_6['Moist'],
+                      'Moist: ' + alat_6['moisture'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      'pH: ' + alat_6['pH'],
+                      'pH: ' + alat_6['ph'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      'Waktu: ' + alat_6['Waktu'],
+                      'Waktu: ' + alat_6['waktu'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -90,10 +90,12 @@ class _alat6State extends State<alat6> {
 
   @override
   Widget build(BuildContext context) {
+    DatabaseReference reference = FirebaseDatabase.instance.ref('Alat_Ukur3/');
+    Query dbref = reference.limitToLast(10);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('Data Alat 6'),
+        title: Text('Data Alat 3'),
       ),
       body: Container(
         height: double.infinity,

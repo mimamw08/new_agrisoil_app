@@ -5,7 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:new_agrisoil_app/service_auth/auth_service.dart';
 import 'package:new_agrisoil_app/encode&decode/keamanan.dart';
 import 'login_page.dart';
@@ -317,18 +318,8 @@ class _register_pageState extends State<register_page> {
     //     .child('foto_user/blank-profile-picture-973460_1280-300x300.jpg');
     // String imageUrl = await image.getDownloadURL();
 
-    final ProgressDialog pr = ProgressDialog(context);
-    pr.style(
-      progress: 50.0,
-      message: "Please wait...",
-      progressWidget: Container(
-          padding: EdgeInsets.all(8.0), child: CircularProgressIndicator()),
-      maxProgress: 100.0,
-      progressTextStyle: TextStyle(
-          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-      messageTextStyle: TextStyle(
-          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
-    );
+    final ProgressDialog pd = ProgressDialog(context: context);
+
     if (_formKey.currentState!.validate()) {
       try {
         UserCredential userCredential =
@@ -340,7 +331,7 @@ class _register_pageState extends State<register_page> {
         Fluttertoast.showToast(
             msg: 'Email verifikasi sudah dikirim segera cek email');
         String uid = userCredential.user!.uid;
-//fungsi enkripsi
+        //fungsi enkripsi
         final key = 'ini kunci rahasia';
         final enkripnama = encryptAES(_nameController.text, key);
         final enkripemail = encryptAES(_emailController.text, key);
@@ -360,9 +351,7 @@ class _register_pageState extends State<register_page> {
             'uid': uid,
           };
           dbref.child('/$uid').set(pelanggan);
-          await pr.show();
           Fluttertoast.showToast(msg: "Berhasil daftar");
-
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => login_page()));
         } else {

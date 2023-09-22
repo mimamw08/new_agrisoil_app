@@ -43,7 +43,7 @@ class _alat9State extends State<alat9> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'N: ' + alat_9['N'],
+                      'N: ' + alat_9['n'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -51,7 +51,7 @@ class _alat9State extends State<alat9> {
                       height: 2,
                     ),
                     Text(
-                      'P: ' + alat_9['P'],
+                      'P: ' + alat_9['p'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -59,7 +59,7 @@ class _alat9State extends State<alat9> {
                       height: 2,
                     ),
                     Text(
-                      'K:  ' + alat_9['K'],
+                      'K:  ' + alat_9['k'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -67,12 +67,20 @@ class _alat9State extends State<alat9> {
                       height: 2,
                     ),
                     Text(
-                      'Moist: ' + alat_9['Moist'],
+                      'pH:  ' + alat_9['ph'],
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      'Moist: ' + alat_9['moisture'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      'Waktu: ' + alat_9['Waktu'],
+                      'Waktu: ' + alat_9['waktu'],
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -86,17 +94,17 @@ class _alat9State extends State<alat9> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseReference reference = FirebaseDatabase.instance.ref('Alat_Ukur9/');
+    DatabaseReference reference = FirebaseDatabase.instance.ref('Alat_Ukur5/');
     Query dbref = reference.limitToLast(10);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text('Data Alat 9'),
+        title: Text('Data Alat 5'),
       ),
       body: Container(
         height: double.infinity,
         child: FirebaseAnimatedList(
-          reverse: true,
+          reverse: false,
           query: dbref,
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {

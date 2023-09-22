@@ -76,6 +76,84 @@ class _calculatorState extends State<calculator> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 200,
+                width: 300,
+                // decoration:
+                //     BoxDecoration(border: Border.all(color: Colors.black)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 50,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [BoxShadow(blurRadius: 3)]),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Image.asset('Asset/carbon.png'),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Fertilizer PPM Calculator',
+                              style: GoogleFonts.poppins(
+                                  color: Colors.green,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 50,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [BoxShadow(blurRadius: 3)]),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Image.asset('Asset/konversi.png'),
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'NPK and N-P205-K20 Converter',
+                              style: GoogleFonts.poppins(
+                                  color: Colors.green,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

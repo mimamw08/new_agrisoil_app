@@ -31,36 +31,32 @@ class _splash_screenState extends State<splash_screen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Align(
-          //   alignment: Alignment.center,
-          //   child: Container(
-          //     height: 300,
-          //     width: 300,
-          //     child: Image.asset('Asset/logo_daun.png'),
-          //   ),
-          // ),
-          // Text(
-          //   'AGRISOIL',
-          //   style: GoogleFonts.poppins(
-          //       fontSize: 24,
-          //       fontWeight: FontWeight.bold,
-          //       color: Color(0xff37C668)),
-          // ),
-          // Text(
-          //   'Supported',
-          //   style: GoogleFonts.poppins(
-          //       fontSize: 12,
-          //       fontWeight: FontWeight.bold,
-          //       color: Color(0xff37C668)),
-          // ),
           Align(
-            alignment: Alignment.center,
-            child: Container(
-              height: 300,
-              width: 300,
-              child: Image.asset("Asset/lpdp.png"),
-            ),
-          ),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    child: Image.asset("Asset/logo_sisoil.png"),
+                  ),
+                  SizedBox(
+                    height: 100,
+                  ),
+                  Text(
+                    'Supported by',
+                    style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 40,
+                    child: Image.asset("Asset/logo_lpdp.png"),
+                  ),
+                ],
+              )),
         ],
       )),
     );

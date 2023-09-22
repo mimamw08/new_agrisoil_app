@@ -4,13 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:new_agrisoil_app/Screen/graph_page.dart';
+import 'package:new_agrisoil_app/Screen/history_page.dart';
 import 'package:new_agrisoil_app/Screen/login_page.dart';
 import 'package:new_agrisoil_app/encode&decode/keamanan.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class home_page extends StatefulWidget {
   home_page({Key? key}) : super(key: key);
@@ -21,9 +25,9 @@ class home_page extends StatefulWidget {
 
 class _home_pageState extends State<home_page> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  late TooltipBehavior _tooltipBehavior;
+
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  String dropdownValue = 'N';
+
   String cekUid = FirebaseAuth.instance.currentUser!.uid;
   DatabaseReference profil = FirebaseDatabase.instance.ref();
   DateTime date = DateTime.now();
@@ -38,329 +42,558 @@ class _home_pageState extends State<home_page> {
   var hsldekriemailuser;
   var hsldekrinohpuser;
 
+  var word;
+
+  var nilaiN_alat2;
+  var nilaiN_alat3;
+  var nilaiP_alat2;
+  var nilaiP_alat3;
+  var nilaiK_alat2;
+  var nilaiK_alat3;
+
+  int _nilai = 0;
+
+  double _batteryLevel = 100.0;
+
   @override
   void initState() {
-    _tooltipBehavior = TooltipBehavior(enable: true);
     profilberubah();
+    profilkepuk();
+    profilN_alat2();
+    profilN_alat3();
+    profilP_alat2();
+    profilP_alat3();
+    profilK_alat2();
+    profilK_alat3();
+    _listenToValueChanges();
+    _animateGauge();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+    IconData iconData = Icons.error; // Ikon default
+
+    if (_nilai == 1) {
+      iconData = Icons.wifi;
+    } else if (_nilai == 2) {
+      iconData = Icons.signal_cellular_alt;
+    }
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          actions: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    logout();
-                    Fluttertoast.showToast(msg: "Berhasil Keluar");
-                    PersistentNavBarNavigator.pushNewScreen(context,
-                        screen: login_page(), withNavBar: false);
-                  },
-                  child: Text(
-                    'logout',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    height: 100,
-                    width: 320,
-                    decoration: BoxDecoration(
-                        color: Color(0xff37C668),
-                        //border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(14),
-                        boxShadow: [BoxShadow(blurRadius: 3)]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:
-                              AssetImage('Asset/blank_picture.jpg'),
-                          radius: 35,
-                        ),
-                        Container(
-                          height: 80,
-                          width: 210,
-                          // decoration: BoxDecoration(
-                          //     border: Border.all(color: Colors.black)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$hsldekripnama',
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                '$hsldekriemailuser',
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                '$hsldekrinohpuser',
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                      height: 120,
-                      width: 250,
-                      decoration: BoxDecoration(
-                          //border: Border.all(color: Colors.black),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: [BoxShadow(blurRadius: 2)]),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text('$date'),
-                          Container(
-                            height: 90,
-                            child: ListView(
-                              // This next line does the trick.
-                              scrollDirection: Axis.horizontal,
-                              children: <Widget>[
-                                Container(
-                                  height: 50,
-                                  width: 100,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '%hslprdct%',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 100,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '%hslprdct%',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 100,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '%hslprdct%',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 100,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '%hslprdct%',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 100,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '%hslprdct%',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    child: Column(
+        body: SlidingUpPanel(
+          isDraggable: false,
+          //parallaxEnabled: true
+          minHeight: 500,
+          maxHeight: 480,
+          body: Container(
+            child: Align(
+                alignment: Alignment.topCenter,
+                child: Column(
                   children: [
+                    SizedBox(
+                      height: 80,
+                    ),
                     Container(
-                      height: 430,
-                      width: 380,
-                      decoration: BoxDecoration(
-                        //border: Border.all(color: Colors.black),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            blurRadius: 4,
-                            //offset: Offset(-2, -6)
-                          )
-                        ],
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8)),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              height: 70,
-                              width: 350,
+                        height: 100,
+                        width: 320,
+                        decoration: BoxDecoration(
+                            color: Color(0xff37C668),
+                            //border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [BoxShadow(blurRadius: 3)]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('Asset/blank_picture.jpg'),
+                              radius: 35,
+                            ),
+                            Container(
+                              height: 80,
+                              width: 210,
                               // decoration: BoxDecoration(
                               //     border: Border.all(color: Colors.black)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '$hsldekripnama',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '$hsldekriemailuser',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    '$hsldekrinohpuser',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        )),
+                  ],
+                )),
+          ),
+          borderRadius: radius,
+
+          panel: Center(
+            child: Container(
+              height: 420,
+              width: 350,
+              // decoration:
+              //     BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //container untuk N
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 3, blurStyle: BlurStyle.outer)
+                              ],
+                              borderRadius: BorderRadius.circular(12)),
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'N',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiN_alat2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'N',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiN_alat3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 4,
+                                    width: 4,
+                                  ),
+                                ],
+                              ))),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      //container untuk p
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 3, blurStyle: BlurStyle.outer)
+                              ],
+                              borderRadius: BorderRadius.circular(12)),
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      DropdownButton<String>(
-                                        // Step 3.
-                                        value: dropdownValue,
-                                        // Step 4.
-                                        items: <String>[
-                                          'N',
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
                                           'P',
-                                          'K',
-                                          'pH',
-                                          'Moist'
-                                        ].map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                              style: TextStyle(fontSize: 18),
-                                            ),
-                                          );
-                                        }).toList(),
-                                        // Step 5.
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            dropdownValue = newValue!;
-                                          });
-                                        },
-                                      ),
-                                      Text('nama tanaman/tanah')
-                                    ],
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiP_alat2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Text(
-                                    '%avgnpk%',
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'P',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiP_alat3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 4,
+                                    width: 4,
+                                  ),
                                 ],
-                              )),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                              height: 300,
-                              width: 380,
-                              decoration: BoxDecoration(
-                                  //border: Border.all(color: Colors.black)
-                                  ),
-                              child: SfCartesianChart(
-                                  primaryXAxis: CategoryAxis(),
-                                  // Chart title
-                                  title: ChartTitle(text: 'Grafik Tanah'),
-                                  // Enable legend
-                                  //legend: Legend(isVisible: true),
-                                  // Enable tooltip
-                                  tooltipBehavior: _tooltipBehavior,
-                                  series: <LineSeries<SalesData, String>>[
-                                    LineSeries<SalesData, String>(
-                                        dataSource: <SalesData>[
-                                          SalesData('Jan', 35),
-                                          SalesData('Feb', 28),
-                                          SalesData('Mar', 34),
-                                          SalesData('Apr', 32),
-                                          SalesData('May', 40),
-                                          SalesData('Jun', 10),
-                                          SalesData('Jul', 12),
-                                          SalesData('Aug', 20),
-                                          SalesData('Sep', 25),
-                                          SalesData('Oct', 21),
-                                          SalesData('Nov', 33),
-                                          SalesData('Des', 38)
-                                        ],
-                                        xValueMapper: (SalesData sales, _) =>
-                                            sales.year,
-                                        yValueMapper: (SalesData sales, _) =>
-                                            sales.sales,
-                                        // Enable data label
-                                        dataLabelSettings:
-                                            DataLabelSettings(isVisible: true))
-                                  ]))
-                        ],
+                              ))),
+                      SizedBox(
+                        width: 12,
                       ),
-                    )
-                  ],
-                )),
-              ],
+                      //container untuk k
+                      Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 3, blurStyle: BlurStyle.outer)
+                              ],
+                              borderRadius: BorderRadius.circular(12)),
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'K',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiK_alat2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 2',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'K',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          '$nilaiK_alat3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          'Alat 3',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 4,
+                                    width: 4,
+                                  ),
+                                ],
+                              ))),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => history_page()));
+                        },
+                        child: Container(
+                            height: 100,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 3, blurStyle: BlurStyle.outer)
+                                ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'Asset/history_icon.png',
+                                  color: Colors.greenAccent,
+                                  scale: 0.7,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Riwayat',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            )),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => graph_Page()));
+                        },
+                        child: Container(
+                            height: 100,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 3, blurStyle: BlurStyle.outer)
+                                ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.graph_square_fill,
+                                  color: Colors.green,
+                                  size: 35,
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Statistik Tanah',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 165,
+                        width: 120,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 3, blurStyle: BlurStyle.outer)
+                            ]),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'Jaringan',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15, fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Icon(
+                              iconData,
+                              size: 100,
+                              color: Colors.green,
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                          height: 165,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 3, blurStyle: BlurStyle.outer)
+                              ]),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Indikator Baterai',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 15, fontWeight: FontWeight.w400),
+                              ),
+                              Container(
+                                height: 140,
+                                width: 210,
+                                child: SfRadialGauge(
+                                  axes: <RadialAxis>[
+                                    RadialAxis(
+                                      minimum: 0,
+                                      maximum: 100,
+                                      //showLabels: false,
+                                      showTicks: false,
+                                      axisLineStyle: AxisLineStyle(
+                                        thickness: 10,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      annotations: <GaugeAnnotation>[
+                                        GaugeAnnotation(
+                                          widget: Container(
+                                            child: Text(
+                                              '$_batteryLevel',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                          angle: 86,
+                                          positionFactor: 0.9,
+                                        )
+                                      ],
+                                      pointers: <GaugePointer>[
+                                        RangePointer(
+                                          value: _batteryLevel,
+                                          width: 10,
+                                          color: Colors.green,
+                                          enableAnimation: true,
+                                        ),
+                                        NeedlePointer(
+                                          value: _batteryLevel,
+                                          enableAnimation: true,
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ));
@@ -392,16 +625,173 @@ class _home_pageState extends State<home_page> {
       });
     });
   }
-}
 
-class ChartData {
-  ChartData(this.x, this.y);
-  final double x;
-  final double? y;
-}
+  void profilkepuk() async {
+    final ref = FirebaseDatabase.instance.ref();
+    final snapshot = await ref.child('prediksi2(alat3)/kurang gram').get();
+    if (snapshot.exists) {
+      word = snapshot.value.toString();
+      print(word);
+      setState(() {});
+    } else {
+      word = 'Tanaman Membutuhkan Pupuk';
+      print('No data available.');
+    }
+  }
 
-class SalesData {
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
+  void profilN_alat2() async {
+    _database
+        .child('Alat_Ukur2')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiN_alat2 =
+            data[lastRandomKey]['n'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai n: $nilaiN_alat2');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void profilN_alat3() async {
+    _database
+        .child('Alat_Ukur3')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiN_alat3 =
+            data[lastRandomKey]['n'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai n: $nilaiN_alat3');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void profilP_alat2() async {
+    _database
+        .child('Alat_Ukur2')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiP_alat2 =
+            data[lastRandomKey]['p'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai p: $nilaiP_alat2');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void profilP_alat3() async {
+    _database
+        .child('Alat_Ukur3')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiP_alat3 =
+            data[lastRandomKey]['p'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai n: $nilaiP_alat3');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void profilK_alat2() async {
+    _database
+        .child('Alat_Ukur2')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiK_alat2 =
+            data[lastRandomKey]['k'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai n: $nilaiK_alat2');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void profilK_alat3() async {
+    _database
+        .child('Alat_Ukur3')
+        .orderByKey()
+        .limitToLast(1)
+        .once()
+        .then((DatabaseEvent snapshot) {
+      var data = snapshot.snapshot.value;
+      if (data != null && data is Map) {
+        // Pastikan data adalah Map
+        var lastRandomKey = data.keys.first;
+        nilaiK_alat3 =
+            data[lastRandomKey]['k'] as String; // Ubah menjadi tipe yang sesuai
+        print('Nilai n: $nilaiK_alat3');
+      } else {
+        print('Data not found');
+      }
+    }).catchError((error) {
+      print('Error: $error');
+    });
+  }
+
+  void _listenToValueChanges() {
+    _database.child('jaringan/kode').onValue.listen((event) {
+      final dynamic value = event.snapshot.value;
+      if (value != null) {
+        setState(() {
+          _nilai = value as int;
+        });
+      }
+    });
+  }
+
+  void _animateGauge() {
+    _database.child('gauge/baterai').onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        double newValue = double.parse(event.snapshot.value.toString());
+        if (newValue >= 0 && newValue <= 100) {
+          setState(() {
+            _batteryLevel = newValue;
+          });
+        }
+      }
+    });
+  }
 }
